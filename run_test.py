@@ -17,8 +17,10 @@ if __name__ == "__main__":
     times = {}
     cmd = "test('{}', '{}', '{}')"
     for module in modules:
+        print("Testing {}".format(module))
         times[module] = {}
         for level in range(max_test_level):
+            print("{} test level {}...".format(module, level))
             this_cmd = cmd.format(module, pvname, level)
             duration = timeit.timeit(this_cmd, number=num_calls,
                                      setup='from __main__ import test')
