@@ -30,7 +30,7 @@ def get_pv(pvname):
 
 
 def get(pvobj):
-    pvobj.get_data()
+    pvobj.get_data(False, -1.0)
     pvobj.getevt_cb.gev.wait()
     return pvobj.data['value']
 
