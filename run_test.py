@@ -1,21 +1,34 @@
 #!/usr/bin/python
 import sys
-import subprocess  # NOQA
+import subprocess
 import timeit
 
 
+def test(module, pvname, level):
+    subprocess.run(['python', 'test_step.py', module, pvname, level])
+
+
 if __name__ == "__main__":
-    max_test_level = sys.argv[1]
+    num_calls = int(sys.argv[1])
     pvname = sys.argv[2]
     modules = sys.argv[3:]
+    max_test_level = 3
 
     times = {}
-    cmd = 'subprocess.run([python, test_step.py, {}, {}, {}])'
+    cmd = "test('{}', '{}', '{}')"
     for module in modules:
         times[module] = {}
         for level in range(max_test_level):
             this_cmd = cmd.format(module, pvname, level)
-            duration = timeit.timeit(this_cmd, number=10000)
+            duration = timeit.timeit(this_cmd, number=num_calls,
+                                     setup='from __main__ import test')
             times[module][level] = duration
 
-    print(times)
+    print("Results for {}, {} iterations:".format(pvname, num_calls))
+    for module in modules:
+        print(module + ":")
+        print("  import:  {}s".format((times[module][0])/num_calls))
+        print("  connect: {}s".format((times[module][1] -
+                                       times[module][0])/num_calls))
+        print("  get:     {}s".format((times[module][2] -
+                                       times[module][1])/num_calls))
