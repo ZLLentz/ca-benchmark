@@ -21,13 +21,13 @@ if __name__ == "__main__":
     module_name = sys.argv[1]
     pvname = sys.argv[2]
     test_level = int(sys.argv[3])
-    if test_level > 0:
+    if test_level >= 0:
         funcs = import_shim(module_name)
         get_pv = funcs[0]
         get = funcs[1]
-    if test_level > 1:
+    if test_level >= 1:
         pvobj = get_pv(pvname)
-    if test_level > 2:
+    if test_level >= 2:
         value = None
         while value is None:
             value = get(pvobj)
