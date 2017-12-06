@@ -1,0 +1,2 @@
+#!/bin/bash
+python run_test.py 2 XPP:USR:MMS:01.RBV pyca psp pyepics caproto
