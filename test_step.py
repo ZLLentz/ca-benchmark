@@ -33,8 +33,10 @@ if __name__ == "__main__":
             pv, sum_array = funcs[2](pvname)
         except IndexError:
             raise RuntimeError('')
-        time.sleep(5)
+        wait_time = 20
+        time.sleep(wait_time)
         print(len(sum_array))
+        print("{} Hz".format(len(sum_array)/wait_time))
         print(np.mean(sum_array))
     elif cmd == 'get':
         get_pv = funcs[0]
