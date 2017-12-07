@@ -2,6 +2,7 @@
 import sys
 import time
 import importlib
+import numpy as np
 
 
 def import_shim(name):
@@ -22,14 +23,30 @@ if __name__ == "__main__":
     module_name = sys.argv[1]
     pvname = sys.argv[2]
     funcs = import_shim(module_name)
-    get_pv = funcs[0]
-    get = funcs[1]
-    t0 = time.time()
-    pvobj = get_pv(pvname)
-    t1 = time.time()
-    value = None
-    while value is None:
-        value = get(pvobj)
-    t2 = time.time()
-    print(t1 - t0)
-    print(t2 - t1)
+    try:
+        cmd = sys.argv[3]
+    except IndexError:
+        cmd = 'get'
+
+    if cmd == 'monitor':
+        try:
+            pv, sum_array = funcs[2](pvname)
+        except IndexError:
+            raise RuntimeError('')
+        time.sleep(5)
+        print(len(sum_array))
+        print(np.mean(sum_array))
+    elif cmd == 'get':
+        get_pv = funcs[0]
+        get = funcs[1]
+        t0 = time.time()
+        pvobj = get_pv(pvname)
+        t1 = time.time()
+        value = None
+        while value is None:
+            value = get(pvobj)
+        t2 = time.time()
+        print(t1 - t0)
+        print(t2 - t1)
+    else:
+        print("Invalid command {}".format(cmd))
