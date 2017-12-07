@@ -1,4 +1,5 @@
 import threading
+import numpy as np
 import pyca
 
 
@@ -36,5 +37,20 @@ def get(pvobj):
     return pvobj.data['value']
 
 
+class ArraySum(object):
+    def __init__(self, pvobj):
+        self.pvobj = pvobj
+        self.sums = []
+
+    def __call__(self, exception=None):
+        if exception is None:
+            data = self.pvobj.data['value']
+            sums.append(np.sum(data))
+
+
 def monitor_test(pvname):
-    pass
+    pv = get_pv(pvname)
+    pv.use_numpy=True
+    pv.monitor_cb = ArraySum(pv)
+    pv.subscribe_channel(7, False, pv.count())
+    return pv, pv.monitor_cb.sums

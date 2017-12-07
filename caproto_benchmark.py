@@ -5,5 +5,17 @@ def get(pvobj):
     return pvobj.get()
 
 
+class ArraySum(object):
+    def __init__(self, pvobj):
+        self.pvobj = pvobj
+        self.sums = []
+
+    def __call__(self, *, value, **kwargs):
+        sums.append(np.sum(value))
+
+
 def monitor_test(pvname):
-    pass
+    pv = get_pv(pvname, auto_monitor=True)
+    cb = ArraySum(pv)
+    pv.add_callback(cb)
+    return pv, cb.sums
