@@ -1,2 +1,2 @@
 #!/bin/bash
-python run_test.py 1000 XPP:USR:MMS:01.RBV pyca psp pyepics #caproto
+python run_test.py 100 XPP:USR:MMS:01.RBV pyca psp pyepics caproto
