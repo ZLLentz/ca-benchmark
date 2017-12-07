@@ -1,3 +1,4 @@
+import numpy as np
 from psp import PV
 
 
@@ -20,7 +21,7 @@ class ArraySum(object):
     def __call__(self, exception=None):
         if exception is None:
             data = self.pvobj.data['value']
-            sums.append(np.sum(data))
+            self.sums.append(np.sum(data))
 
 
 def monitor_test(pvname):

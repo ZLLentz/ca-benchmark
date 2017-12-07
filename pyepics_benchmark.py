@@ -1,4 +1,5 @@
 import threading
+import numpy as np
 import epics
 
 
@@ -28,7 +29,7 @@ class ArraySum(object):
         self.sums = []
 
     def __call__(self, *, value, **kwargs):
-        sums.append(np.sum(value))
+        self.sums.append(np.sum(value))
 
 
 def monitor_test(pvname):

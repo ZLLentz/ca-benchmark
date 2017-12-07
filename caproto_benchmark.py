@@ -1,3 +1,4 @@
+import numpy as np
 from caproto.threading.client import get_pv  # NOQA
 
 
@@ -11,7 +12,7 @@ class ArraySum(object):
         self.sums = []
 
     def __call__(self, *, value, **kwargs):
-        sums.append(np.sum(value))
+        self.sums.append(np.sum(value))
 
 
 def monitor_test(pvname):
