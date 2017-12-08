@@ -10,19 +10,25 @@ Guiding principles:
 2. Need a normal operation simulator to check memory usage
 3. Easy to test gets, harder to test puts
 
-The first pass through this will be testing the following stages, separated as much as each individual module allows:
+The first pass through this will be testing the following stages:
 
 1. import and set up code
-2. create object
-3. call create_channel
-4. connection callback sets an Event flag
-5. call get_data and store the value
+2. create object, connect, and verify connected
+3. get data and store the value
+4. get data again
 
-To do this fairly (eliminate caching, etc.) I will start new python processes each time and run through n stages of this process before exiting. I will create a matrix of n vs module. I will use the same pvs for the same tests. I will run the tests several times at different times of days. I will pick a large number of reps to get an average (probably 1000 or 10000).
+We will not be recording the time of step 1 because it's largely irrelevant to operation.
+Step 2 gives us the scaling factor for instantiating N pv objects and having them be ready to use.
+Step 3 gives us the time to get a value, plus the first-get setup time (ctrl vars, etc.)
+Step 4 factors out the first-get setup time
+
+Ideally I would test the clients with finer granularity, but different PV object interfaces don't allow the user to decide to not connect, not wait for connection, etc.
+
+To do this fairly (eliminate caching, etc.) I will start new python processes each time and run through the whole process before exiting.
 
 The ultimate goal isn't to evaluate which module is currently best overall, but rather to evaluate which module has the best approach.
 
-We should also start by defining what kinds of performance differences matter, and what kinds don't. The timings that matter most are the combined 2-4 segment and step 5, since we will be connecting to many PVs and we will be getting data often.
+We should also start by defining what kinds of performance differences matter, and what kinds don't.
 
 Let's assume a typical high-level app needs to access 10^4 PVs, and we'll actually care enough about 1% of them to get the value. A total delay of greater than 1s compared to another module is not acceptable. Therefore, if the connection difference is greater than 10^-4 s per PV or the get difference is greater than 10^-2 s per PV, we have to choose the module that is faster. If the difference is less than this threshold, especially if it is significantly less, then we have to pick the simplest implementation (more Python, less C).
 
