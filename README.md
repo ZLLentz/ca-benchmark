@@ -52,7 +52,7 @@ caproto | 1.03e-1 | 7.16e-4 | 6.07e-4
 - Get pv, check value, record time
 # Comments
 - Performance penalty of using caproto's threading interface (pyepics-like) at application initialization is about 0.07s per PV compared to the other modules
-- All of these interfaces can create PVs faster than this if you distribute the connection task across threads or wait asyncronously
+- All of these interfaces can create PVs faster than this if you distribute the connection task across threads or wait asynchronously.
 - This benchmark completely ignores the fact that caproto has performance gains in real applications by leveraging better async support. I only checked the threading interface here due to the easier comparison.
 - The differences in get times are completely insignificant in all cases. The performance win here by pyca is never felt by the user.
 
