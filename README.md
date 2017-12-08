@@ -41,21 +41,19 @@ The other performance difference that I care about is total process and memory u
 # Get test: time elapsed (s)
 Module | Connect | Get 1 | Get 2
 --- | --- | --- | ---
-pyca | 2.84e-2 | 3.09e-4 | 2.17e-5
-psp | 2.85e-2 | 7.72e-4 | 4.75e-4
-pyepics | 9.36e-2 | 1.36e-3 | 5.77e-4
-caproto | 2.05e-1 | 7.15e-4 | 5.89e-4
+pyca | 2.84e-2 | 3.04e-4 | 2.09e-5
+psp | 2.85e-2 | 7.83e-4 | 4.59e-4
+pyepics | 2.92e-2 | 1.25e-3 | 6.42e-4
+caproto | 1.03e-1 | 7.16e-4 | 6.07e-4
 # Methodology
-- Import everything and get right before creating the PV object, start timer
+- Import everything, special module init, start timer
 - Create PV object, connect, wait for connection, record time
 - Get pv, check value, record time
 - Get pv, check value, record time
 # Comments
-- By the previous metrics, psp is enough faster in the init/setup/connect stage to warrant using over pyepics in applications that need to create at least 100 PV objects, and over caproto in applications that need to create at least 10 PV objects, with some caveats.
-- I suspect that pyepics loses some time unfairly here due to an inefficient loop/waiting on connections implementation
-- I suspect that caproto can instantiate much faster if more work is put into the threading interface
-- I suspect that some time is lost in caproto that should actually be counted in initial startup time
+- Performance penalty of using caproto's threading interface (pyepics-like) at application initialization is about 0.07s per PV compared to the other modules
 - All of these interfaces can create PVs faster than this if you distribute the connection task across threads or wait asyncronously
+- This benchmark completely ignores the fact that caproto has performance gains in real applications by leveraging better async support. I only checked the threading interface here due to the easier comparison.
 - The differences in get times are completely insignificant in all cases. The performance win here by pyca is never felt by the user.
 
 # Monitor test: cpu usage
@@ -76,4 +74,5 @@ caproto | 78.06 | 77.8 | 81.8 | 76.8
 - I neglected to run this test for pure pyca because there appears to be an issue where callbacks are dropped if they come in too quickly, but the psp test is a nice proxy because psp is really just a python wrapper around pyca.
 
 # Preliminary Conclusions
-- pyca/psp currently has an advantage in the case where your application must create thousands of PV objects. Otherwise, it doesn't really matter which library you use.
+- pyca/psp currently has an advantage in the case where your application must create thousands of PV objects, but this has only a marginal advantage over pyepics. In all other cases, it doesn't really matter which library you use.
+- caproto is very promising but isn't mature enough to start using 100%
