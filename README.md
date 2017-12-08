@@ -17,12 +17,12 @@ The first pass through this will be testing the following stages:
 1. import and set up code
 2. create object, connect, and verify connected
 3. get data and store the value
-4. get data again
+4. get data again and store the value
 
 We will not be recording the time of step 1 because it's largely irrelevant to operation.
 Step 2 gives us the scaling factor for instantiating N pv objects and having them be ready to use.
-Step 3 gives us the time to get a value, plus the first-get setup time (ctrl vars, etc.)
-Step 4 factors out the first-get setup time
+Step 3 gives us the time to get a value, plus the first-get setup time (ctrl vars, etc.).
+Step 4 factors out the first-get setup time.
 
 Ideally I would test the clients with finer granularity, but different PV object interfaces don't allow the user to decide to not connect, not wait for connection, etc.
 
