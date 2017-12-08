@@ -2,6 +2,8 @@ import threading
 import numpy as np
 import epics
 
+epics.ca.initialize_libca()
+
 
 class ConnectCallback(object):
     def __init__(self):
