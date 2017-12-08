@@ -3,7 +3,7 @@ from caproto.threading.client import get_pv  # NOQA
 
 
 def get(pvobj):
-    return pvobj.get()
+    return pvobj.get(use_monitor=False)
 
 
 class ArraySum(object):

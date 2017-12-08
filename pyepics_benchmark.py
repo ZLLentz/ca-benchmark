@@ -20,7 +20,7 @@ def get_pv(pvname):
 
 
 def get(pvobj):
-    return pvobj.get()
+    return pvobj.get(use_monitor=False)
 
 
 class ArraySum(object):
