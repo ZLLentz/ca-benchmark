@@ -48,7 +48,12 @@ if __name__ == "__main__":
         while value is None:
             value = get(pvobj)
         t2 = time.time()
+        value = None
+        while value is None:
+            value = get(pvobj)
+        t3 = time.time()
         print(t1 - t0)
         print(t2 - t1)
+        print(t3 - t2)
     else:
         print("Invalid command {}".format(cmd))
