@@ -2,6 +2,13 @@ import numpy as np
 from caproto.threading.client import get_pv  # NOQA
 
 
+# Wastes time but initializes the pv context
+try:
+    get_pv('fakename')
+except:
+    pass
+
+
 def get(pvobj):
     return pvobj.get(use_monitor=False)
 
