@@ -82,4 +82,4 @@ caproto | 78.06 | 77.8 | 81.8 | 76.8
 
 ## Next Steps
 - caproto is in active development and I will be watching it closely
-- Connect to 1000 PVs at the same time timing test. This is a more realistic picture of the startup bottleneck that plagues these higher-level python apps.
+- Connect to 10000 PVs at the same time timing test. This is a more realistic picture of the startup bottleneck that plagues these higher-level python apps.
