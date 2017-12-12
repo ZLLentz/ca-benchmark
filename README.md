@@ -2,9 +2,11 @@
 There is some confusion and indecision over which epics python module should be used by the collaboration. We can certainly support them all, but which one should we put effort into polishing? None of them are bad, but none of them are quite satisfactory.
 
 ## Modules to compare:
-- pyepics
-- caproto
-- psp/pyca
+Library | Version
+--- | ---
+pyca | 3.0.0
+pyepics | 3.2.7
+caproto | 6b7b49605b6f8b2bbb5569702e6769bcfa70629f
 
 ## Guiding principles:
 1. Need mechanism to fairly compare the modules and disambiguate the stages of the run, even if it isn't "normal" operation
