@@ -78,3 +78,8 @@ caproto | 78.06 | 77.8 | 81.8 | 76.8
 ## Preliminary Conclusions
 - pyca/psp currently has an advantage in the case where your application must create thousands of PV objects, but this has only a marginal advantage over pyepics. In all other cases, it doesn't really matter which library you use.
 - caproto is very promising but isn't mature enough to start using 100%
+
+
+## Next Steps
+- caproto is in active development and I will be watching it closely
+- Connect to 1000 PVs at the same time timing test. This is a more realistic picture of the startup bottleneck that plagues these higher-level python apps.
